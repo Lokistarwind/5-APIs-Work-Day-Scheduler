@@ -2,68 +2,46 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 $(function () {
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  //
 
-  //var test2 = $('.saveBtn');
-  //console.log(test2);
+//Passes the hour block name and displays the text box information from local storage
+function setUpPlanner(hour)
+{
+  var hourxLocal = localStorage.getItem(hour);
+  var hourxLocalName = "#" + hour;
+  var hourTextLocal = $(hourxLocalName).children().eq(1);
+  var hourTextBlockLocal = $(hourTextLocal);  
+  $(hourTextBlockLocal).text(hourxLocal);
+}
+//Sets up all the time blocks from local storage
+setUpPlanner("hour-9");
+setUpPlanner("hour-10");
+setUpPlanner("hour-11");
+setUpPlanner("hour-12");
+setUpPlanner("hour-13");
+setUpPlanner("hour-14");
+setUpPlanner("hour-15");
+setUpPlanner("hour-16");
+setUpPlanner("hour-17");
 
-  //test2.on('click', function(){
-   // var test = this.parentElement.id;
-   // console.log(test);
-  //})
-
-  //var hour9Text = localStorage.getItem("hour9Text");
-
+//Stores text inputed in time block and saves it to local memory
   $('.btn.saveBtn.col-2.col-md-1').on('click',function(){
-   var test = this.parentElement.id;
-   var test2 = "#"+test;
-   var test3 = $(test2);
-   var test4 = test3.children().eq(1);
-   var test5 = $(test4);
-   //document.getElementById(test5).innerHTML = "New text!";
-   //var test5 = document.getElementById(test4);
-   //var test6 = document.querySelector(test4.class);
+  //Gets hour-x-id
+   var hour = this.parentElement.id;
+   var hourID = "#"+hour;
+  //DOM traverses to the hour block that save button was clicked on
+   var hourBlock = $(hourID);
+  //DOM traverses to the hour block text area that save button was clicked on
+   var hourText = hourBlock.children().eq(1);
+   
+   //Gets textarea class of hour-x-id
+   var hourTextBlock = $(hourText);
 
-
-   //if(test5.textContent)
-
-
-   console.log(test2);
-   console.log(test3);
-   console.log(test4);
-   console.log(test5);
-   //console.log(test6);
-
+   //Sets and stores value of textarea unputed by user
+   localStorage.setItem(hour,hourTextBlock.val());
+   $(hourTextBlock).text(hourTextBlock.val());
+   
   });
  
-
-
-
-
-//same as element selector like getlelemnt by id
-//var example = $('#htmlTag');
-//create element and set text
-//var create = $('<h1>') ;
-//create.text('hello world');
-//designate it as class of name
-//create.attr('class', 'class name')
-//add class
-//create.addClass('another class');
-//css
-//create.css('border', 'rgb etc')
-//append object to html
-//example.append(create);
-//or example.append('<h2> stuff </h2>')
-
-
-
-
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
   // attribute of each time-block be used to conditionally add or remove the
@@ -104,19 +82,15 @@ $(function () {
   checkTimeBlock(16, $('#hour-16'));
   checkTimeBlock(17, $('#hour-17'));
 
-  //Note: its asking how to handle a user changing the input on a time block
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-  //
-  
   // TODO: Add code to display the current date in the header of the page.
   //set date on start up
+
   //function and call so it updates the date.
   $('#currentDay').text(curentTime.format('dddd, MMMM D, YYYY '));
   var updateTime = function()
   {
       var curentTime = dayjs();
+      //Displays the time on the HTML page.
       $('#currentDay').text(curentTime.format('dddd, MMMM D, YYYY '));
   }
   setInterval(updateTime, 1000);
